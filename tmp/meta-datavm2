@@ -1,0 +1,18 @@
+instance-id: 1202e73d8123-26b7-4825-8f2d-797fc25f131f
+hostname: ${VM2_NAME}
+local-hostname: ${VM2_NAME}
+network-interfaces: |
+  auto ${VM2_INTERNAL_IF}
+  iface ${VM2_INTERNAL_IF} inet static 
+  gateway ${VM1_INTERNAL_IP}
+  address ${VM2_INTERNAL_IP}
+  network ${INTERNAL_NET_IP}
+  netmask ${INTERNAL_NET_MASK}
+  dns-nameservers ${VM_DNS} 
+
+  auto ${VM2_MANAGEMENT_IF}
+  iface ${VM2_MANAGEMENT_IF} inet static
+  address ${VM2_MANAGEMENT_IP} 
+  network ${MANAGEMENT_NET_IP}
+  netmask ${MANAGEMENT_NET_MASK}
+

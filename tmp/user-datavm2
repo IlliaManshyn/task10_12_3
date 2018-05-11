@@ -1,0 +1,18 @@
+#cloud-config
+password: qwerty
+chpasswd: { expire: False }
+ssh_authorized_keys:
+  - ssh-rsa ${key}  ubuntu@${VM2_MANAGEMENT_IP}
+
+
+runcmd:
+ - 'ip link add ${VXLAN_IF} type vxlan id ${VID} remote ${VM1_INTERNAL_IP} local ${VM2_INTERNAL_IP} dstport 4789'
+ - 'ip link set ${VXLAN_IF} up'
+ - 'ip addr add ${VM2_VXLAN_IP}/24 dev ${VXLAN_IF}'
+ - 'apt-get update'
+ - 'apt-get install curl -y'
+ - 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
+ - 'add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
+ - 'apt-get update'
+ - 'apt-get install docker-ce -y'
+ - 'docker run -dit --name apache -p ${VM2_VXLAN_IP}:${APACHE_PORT}:80 ${APACHE_IMAGE}'

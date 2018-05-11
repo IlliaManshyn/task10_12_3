@@ -1,0 +1,20 @@
+instance-id: qqw23b3w3a73469-11e0-4419-acec-6beaa5ae74df
+hostname: ${VM1_NAME}
+local-hostname: ${VM1_NAME}
+network-interfaces: |
+  auto ${VM1_EXTERNAL_IF}
+  iface ${VM1_EXTERNAL_IF} inet ${EXTERNAL_NET_TYPE}
+  
+  auto ${VM1_INTERNAL_IF}
+  iface ${VM1_INTERNAL_IF} inet static
+  address ${VM1_INTERNAL_IP}
+  network ${INTERNAL_NET_IP}
+  netmask ${INTERNAL_NET_MASK}
+
+  auto ${VM1_MANAGEMENT_IF}
+  iface ${VM1_MANAGEMENT_IF} inet static
+  address ${VM1_MANAGEMENT_IP} 
+  network ${MANAGEMENT_NET_IP}
+  netmask ${MANAGEMENT_NET_MASK}
+
+

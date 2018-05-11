@@ -1,0 +1,11 @@
+server {
+        listen 443;
+        server_name nginx;
+        ssl on;
+        ssl_certificate /etc/ssl/certs/web.pem;
+        ssl_certificate_key /etc/ssl/certs/nginx.web.key;
+        location / {
+        proxy_pass   http://${VM2_VXLAN_IP}:${APACHE_PORT};
+        }
+}
+

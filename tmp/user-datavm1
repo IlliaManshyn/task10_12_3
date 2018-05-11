@@ -1,0 +1,23 @@
+#cloud-config
+password: qwerty
+chpasswd: { expire: False }
+ssh_authorized_keys:
+  - ssh-rsa ${key}  ubuntu@${VM1_MANAGEMENT_IP}
+mount:
+- [ xvdh, $dir/certs, "auto", "defaults,nofail", "0", "0" ]
+- [ xvdh, $dir/etc, "auto", "defaults,nofail", "0", "0" ]
+runcmd:
+- 'sysctl net.ipv4.ip_forward=1'
+- 'iptables -t nat -A POSTROUTING -o ${VM1_EXTERNAL_IF} -j MASQUERADE'
+- 'ip link add ${VXLAN_IF} type vxlan id ${VID} remote ${VM2_INTERNAL_IP} local ${VM1_INTERNAL_IP} dstport 4789'
+- 'ip link set ${VXLAN_IF} up'
+- 'ip addr add ${VM1_VXLAN_IP}/24 dev ${VXLAN_IF}'
+- 'apt-get update'
+- 'apt-get install curl -y'
+- 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
+- 'add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
+- 'apt-get update'
+- 'apt-get install docker-ce -y'
+- 'iptables -t nat -A POSTROUTING -o docker0 -j MASQUERADE'
+- 'mount -t iso9660 /dev/cdrom /media'
+- 'docker run --name nginx -v /media/etc/nginx_site.conf:/etc/nginx/conf.d/nginx_site.conf:ro -v /media/certs:/etc/ssl/certs -v /srv/log/nginx:/var/log/nginx -p ${VM1_EXTERNAL_IP}:${NGINX_PORT}:443 -d ${NGINX_IMAGE} nginx-debug -g "daemon off;"'
