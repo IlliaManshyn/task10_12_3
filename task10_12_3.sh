@@ -32,7 +32,7 @@ envsubst < $dir/tmp/internal.xml > $dir/networks/internal.xml
 envsubst < $dir/tmp/management.xml > $dir/networks/management.xml
 envsubst < $dir/tmp/user-datavm1 > $dir/config-drives/vm1-config/user-data
 envsubst < $dir/tmp/user-datavm2 > $dir/config-drives/vm2-config/user-data
-envsubst < $dir/tmp/nginx_site > $dir/docker/etc/nginx_site.conf
+envsubst < $dir/tmp/nginx.conf > $dir/docker/etc/nginx.conf
 
 #Creating certs
 cd $dir/docker/certs
