@@ -20,4 +20,4 @@ runcmd:
 - 'apt-get install docker-ce -y'
 - 'iptables -t nat -A POSTROUTING -o docker0 -j MASQUERADE'
 - 'mount -t iso9660 /dev/cdrom /media'
-- 'docker run --name nginx -v /media/etc/nginx_site.conf:/etc/nginx/conf.d/nginx_site.conf:ro -v /media/certs:/etc/ssl/certs -v /srv/log/nginx:/var/log/nginx -p ${VM1_EXTERNAL_IP}:${NGINX_PORT}:443 -d ${NGINX_IMAGE} nginx-debug -g "daemon off;"'
+- 'docker run --name nginx -v /media/etc/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro -v /media/certs:/etc/ssl/certs -v /srv/log/nginx:/var/log/nginx -p ${VM1_EXTERNAL_IP}:${NGINX_PORT}:443 -d ${NGINX_IMAGE} nginx-debug -g "daemon off;"'
