@@ -3,9 +3,6 @@ password: qwerty
 chpasswd: { expire: False }
 ssh_authorized_keys:
   - ssh-rsa ${key}  ubuntu@${VM1_MANAGEMENT_IP}
-mount:
-- [ xvdh, $dir/certs, "auto", "defaults,nofail", "0", "0" ]
-- [ xvdh, $dir/etc, "auto", "defaults,nofail", "0", "0" ]
 runcmd:
 - 'sysctl net.ipv4.ip_forward=1'
 - 'iptables -t nat -A POSTROUTING -o ${VM1_EXTERNAL_IF} -j MASQUERADE'
