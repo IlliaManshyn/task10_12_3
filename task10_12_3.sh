@@ -4,9 +4,9 @@ export dir="$(cd "$(dirname "$0")" && pwd)"
 export MAC=52:54:00:`(date; cat /proc/interrupts) | md5sum | sed -r 's/^(.{6}).*$/\1/; s/([0-9a-f]{2})/\1:/g; s/:$//;'`
 
 #Exporting variables from config
-export $(grep -v '#' $dir/tmp/config)
-envsubst < $dir/tmp/config > $dir/config
 export $(grep -v '#' $dir/config)
+envsubst < $dir/config > $dir/exec_config
+export $(grep -v '#' $dir/exec_config)
 #Creating directories
 
 mkdir /var/lib/libvirt/vm1
