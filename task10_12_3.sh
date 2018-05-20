@@ -9,8 +9,8 @@ envsubst < $dir/config > $dir/exec_config
 export $(grep -v '#' $dir/exec_config)
 #Creating directories
 
-mkdir /var/lib/libvirt/vm1
-mkdir /var/lib/libvirt/vm2
+mkdir -p /var/lib/libvirt/images/vm1
+mkdir -p /var/lib/libvirt/images/vm2
 mkdir $dir/networks
 mkdir -p $dir/config-drives/vm1-config
 mkdir -p $dir/config-drives/vm2-config
